@@ -60,7 +60,7 @@ cat <<EOF > /opt/netboot.xyz/docker-compose.yml
 version: "3.8"
 services:
   netbootxyz:
-    image: netbootxyz/netboot.xyz:latest
+    image: netbootxyz/netbootxyz:latest
     container_name: netbootxyz
     environment:
       - MENU_VERSION=1.9.9

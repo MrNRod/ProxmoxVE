@@ -40,10 +40,10 @@ function update_script() {
   fi
 
   # Get current version
-  CURRENT_VERSION=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netboot.xyz | head -1 | cut -d':' -f2)
+  CURRENT_VERSION=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
   
   # Get latest version from Docker Hub
-  RELEASE=$(curl -fsSL "https://registry.hub.docker.com/v2/repositories/netbootxyz/netboot.xyz/tags/" | jq -r '.results[0].name' 2>/dev/null || echo "latest")
+  RELEASE=$(curl -fsSL "https://registry.hub.docker.com/v2/repositories/netbootxyz/netbootxyz/tags/" | jq -r '.results[0].name' 2>/dev/null || echo "latest")
 
   if [[ "${RELEASE}" != "${CURRENT_VERSION}" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
     # Stopping Services
