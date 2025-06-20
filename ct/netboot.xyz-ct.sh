@@ -17,7 +17,7 @@ var_ram="${var_ram:-2048}"
 # Amount of used disk space in GB (e.g. 4 or 10)
 var_disk="${var_disk:-25}"
 # Default OS (e.g. debian, ubuntu, alpine)
-var_os="${var_os:-ubuntu}"
+var_os="${var_os:-debian}"
 # Default OS version (e.g. 12 for debian, 24.04 for ubuntu, 3.20 for alpine)
 var_version="${var_version:-12}"
 # 1 = unprivileged container, 0 = privileged container
