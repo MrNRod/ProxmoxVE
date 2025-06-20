@@ -57,7 +57,6 @@ cd /opt/netboot.xyz
 
 # Create docker-compose.yml
 cat <<EOF > /opt/netboot.xyz/docker-compose.yml
-version: "3.8"
 services:
   netbootxyz:
     image: netbootxyz/netbootxyz:latest
