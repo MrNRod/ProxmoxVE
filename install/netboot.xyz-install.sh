@@ -153,7 +153,7 @@ else
 fi
 
 # Save version info
-RELEASE=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netboot.xyz | head -1 | cut -d':' -f2)
+RELEASE=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
 echo "${RELEASE}" > /opt/netboot.xyz_version.txt
 
 motd_ssh
