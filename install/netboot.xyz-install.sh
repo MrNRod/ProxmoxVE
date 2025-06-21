@@ -29,7 +29,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Docker"
 # Add Docker's official GPG key
 $STD install -m 0755 -d /etc/apt/keyrings
-$STD curl -fsSL https://download.docker.com/linux/debian/gpg | $STD gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+curl -fsSL https://download.docker.com/linux/debian/gpg | $STD gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 $STD chmod a+r /etc/apt/keyrings/docker.gpg
 
 # Add the repository to Apt sources
