@@ -40,8 +40,8 @@ function update_script() {
   fi
 
   # Get the last pushed timestamp from Docker Hub
-  LATEST_PUSH=$(curl -fsSL "https://registry.hub.docker.com/v2/repositories/netbootxyz/netbootxyz/tags/latest/" | jq -r '.last_pushed' 2>/dev/null)
-  
+  LATEST_PUSH=$(curl -fsSL "https://registry.hub.docker.com/v2/repositories/netbootxyz/netbootxyz/tags/" | jq -r '.results[] | select(.name=="latest") | .last_pushed' 2>/dev/null)
+
   # Get our current image creation date
   CURRENT_IMAGE_DATE=$(docker inspect netbootxyz/netbootxyz:latest --format='{{.Created}}' 2>/dev/null | cut -d'T' -f1)
   
