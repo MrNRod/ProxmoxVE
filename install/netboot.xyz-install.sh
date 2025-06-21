@@ -145,14 +145,14 @@ msg_info "Waiting for netboot.xyz to start"
 sleep 30
 
 # Check if service is running
-if $STD docker ps | grep -q netbootxyz; then
+if docker ps | grep -q netbootxyz; then
     msg_ok "netboot.xyz is running"
 else
     msg_error "netboot.xyz failed to start"
 fi
 
 # Save version info
-RELEASE=$($STD docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
+RELEASE=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
 echo "${RELEASE}" > /opt/netboot.xyz_version.txt
 
 motd_ssh
