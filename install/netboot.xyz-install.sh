@@ -29,7 +29,7 @@ msg_ok "Installed Dependencies"
 msg_info "Installing Docker"
 # Add Docker's official GPG key
 $STD install -m 0755 -d /etc/apt/keyrings
-$STD curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+$STD curl -fsSL https://download.docker.com/linux/debian/gpg | $STD gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 $STD chmod a+r /etc/apt/keyrings/docker.gpg
 
 # Add the repository to Apt sources
@@ -45,7 +45,7 @@ $STD systemctl start docker
 msg_ok "Installed Docker"
 
 msg_info "Installing Docker Compose (standalone)"
-COMPOSE_VERSION=$($STD curl -fsSL https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+COMPOSE_VERSION=$(curl -fsSL https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
 $STD curl -fsSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
