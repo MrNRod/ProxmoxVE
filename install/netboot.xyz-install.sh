@@ -5,7 +5,6 @@
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://netboot.xyz/
 
-# Import Functions und Setup
 source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 color
 verb_ip6
@@ -14,7 +13,6 @@ setting_up_container
 network_check
 update_os
 
-# Installing Dependencies
 msg_info "Installing Dependencies"
 $STD apt-get install -y \
   curl \
@@ -25,14 +23,11 @@ $STD apt-get install -y \
   lsb-release
 msg_ok "Installed Dependencies"
 
-# Installing Docker
 msg_info "Installing Docker"
-# Add Docker's official GPG key
 $STD install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/debian/gpg | $STD gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 $STD chmod a+r /etc/apt/keyrings/docker.gpg
 
-# Add the repository to Apt sources
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
@@ -55,7 +50,6 @@ msg_info "Setting up netboot.xyz"
 mkdir -p /opt/netboot.xyz/{config,assets}
 cd /opt/netboot.xyz
 
-# Create docker-compose.yml
 cat <<EOF > /opt/netboot.xyz/docker-compose.yml
 services:
   netbootxyz:
@@ -74,7 +68,6 @@ services:
     restart: unless-stopped
 EOF
 
-# Create initial configuration
 mkdir -p /opt/netboot.xyz/config/menus
 cat <<EOF > /opt/netboot.xyz/config/netboot.xyz.yml
 ---
@@ -142,14 +135,12 @@ msg_ok "Created systemd service"
 msg_info "Waiting for netboot.xyz to start"
 sleep 30
 
-# Check if service is running
 if docker ps | grep -q netbootxyz; then
     msg_ok "netboot.xyz is running"
 else
     msg_error "netboot.xyz failed to start"
 fi
 
-# Save version info
 RELEASE=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
 echo "${RELEASE}" > /opt/netboot.xyz_version.txt
 

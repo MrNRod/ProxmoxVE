@@ -24,45 +24,34 @@ function update_script() {
   check_container_storage
   check_container_resources
 
-  # Check if installation is present
   if [[ ! -f /opt/netboot.xyz/docker-compose.yml ]]; then
     msg_error "No ${APP} Installation Found!"
     exit
   fi
 
-  # Get the last pushed timestamp from Docker Hub
   LATEST_PUSH=$(curl -fsSL "https://registry.hub.docker.com/v2/repositories/netbootxyz/netbootxyz/tags/" | jq -r '.results[] | select(.name=="latest") | .last_pushed' 2>/dev/null)
-
-  # Get our current image creation date
   CURRENT_IMAGE_DATE=$(docker inspect netbootxyz/netbootxyz:latest --format='{{.Created}}' 2>/dev/null | cut -d'T' -f1)
-  
-  # Get the push date (just the date part)
   LATEST_PUSH_DATE=$(echo "$LATEST_PUSH" | cut -d'T' -f1)
 
   if [[ "$LATEST_PUSH_DATE" != "$CURRENT_IMAGE_DATE" ]] || [[ ! -f /opt/${APP}_version.txt ]]; then
-    # Stopping Services
     msg_info "Stopping $APP"
     cd /opt/netboot.xyz
     docker-compose down
     msg_ok "Stopped $APP"
 
-    # Creating Backup
     msg_info "Creating Backup"
     tar -czf "/opt/${APP}_backup_$(date +%F).tar.gz" /opt/netboot.xyz/config /opt/netboot.xyz/assets
     msg_ok "Backup Created"
 
-    # Execute Update
     msg_info "Updating $APP (pushed: $LATEST_PUSH_DATE)"
     docker-compose pull
     docker-compose up -d
     msg_ok "Updated $APP"
 
-    # Cleaning up
     msg_info "Cleaning Up"
     docker image prune -f
     msg_ok "Cleanup Completed"
 
-    # Save the update info
     echo "$LATEST_PUSH_DATE" > /opt/${APP}_version.txt
     msg_ok "Update Successful"
   else
