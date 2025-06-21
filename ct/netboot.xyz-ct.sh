@@ -5,22 +5,13 @@ source <(curl -fsSL https://raw.githubusercontent.com/MrNRod/ProxmoxVE/MrNRod-Sc
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://netboot.xyz/
 
-# App Default Values
-# Name of the app (e.g. Google, Adventurelog, Apache-Guacamole"
 APP="netboot.xyz"
-# Tags for Proxmox VE, maximum 2 pcs., no spaces allowed, separated by a semicolon ; (e.g. database | adblock;dhcp)
 var_tags="${var_tags:-pxe;boot}"
-# Number of cores (1-X) (e.g. 4) - default are 2
 var_cpu="${var_cpu:-2}"
-# Amount of used RAM in MB (e.g. 2048 or 4096)
 var_ram="${var_ram:-2048}"
-# Amount of used disk space in GB (e.g. 4 or 10)
 var_disk="${var_disk:-25}"
-# Default OS (e.g. debian, ubuntu, alpine)
 var_os="${var_os:-debian}"
-# Default OS version (e.g. 12 for debian, 24.04 for ubuntu, 3.20 for alpine)
 var_version="${var_version:-12}"
-# 1 = unprivileged container, 0 = privileged container
 var_unprivileged="${var_unprivileged:-1}"
 
 header_info "$APP"
