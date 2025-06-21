@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 source <(curl -fsSL https://raw.githubusercontent.com/MrNRod/ProxmoxVE/MrNRod-Scripts/misc/build.func)
 # Copyright (c) 2021-2025 community-scripts ORG
-# Author: [YourUserName]
+# Author: MrNRod
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
-# Source: [SOURCE_URL]
+# Source: https://netboot.xyz/
 
 # App Default Values
 # Name of the app (e.g. Google, Adventurelog, Apache-Guacamole"
@@ -92,5 +92,7 @@ echo -e "${INFO}${YW} Access the web interface using:${CL}"
 echo -e "${TAB}${GATEWAY}${BGN}http://${IP}:3000${CL}"
 echo -e "${INFO}${YW} TFTP server is available on:${CL}"
 echo -e "${TAB}${GATEWAY}${BGN}tftp://${IP}:69${CL}"
+echo -e "${INFO}${YW} Boot assets available at:${CL}"
+echo -e "${TAB}${GATEWAY}${BGN}http://${IP}:8080${CL}"
 echo -e "${INFO}${YW} Configuration directory:${CL}"
 echo -e "${TAB}${GATEWAY}${BGN}/opt/netboot.xyz/config${CL}"
