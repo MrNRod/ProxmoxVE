@@ -71,7 +71,7 @@ services:
     ports:
       - "3000:3000"
       - "69:69/udp"
-      - "80:80"
+      - "8080:80"
     restart: unless-stopped
 EOF
 
