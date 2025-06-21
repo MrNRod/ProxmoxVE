@@ -62,7 +62,6 @@ services:
     image: netbootxyz/netbootxyz:latest
     container_name: netbootxyz
     environment:
-      - MENU_VERSION=1.9.9
       - NGINX_PORT=80
       - WEB_APP_PORT=3000
     volumes:
@@ -81,7 +80,6 @@ cat <<EOF > /opt/netboot.xyz/config/netboot.xyz.yml
 ---
 # netboot.xyz configuration
 boot_domain: "https://boot.netboot.xyz"
-boot_version: "1.9.9"
 generate_menus: true
 web_ui_port: 3000
 nginx_port: 80
