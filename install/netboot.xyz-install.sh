@@ -28,9 +28,9 @@ msg_ok "Installed Dependencies"
 # Installing Docker
 msg_info "Installing Docker"
 # Add Docker's official GPG key
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-chmod a+r /etc/apt/keyrings/docker.gpg
+$STD install -m 0755 -d /etc/apt/keyrings
+$STD curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+$STD chmod a+r /etc/apt/keyrings/docker.gpg
 
 # Add the repository to Apt sources
 echo \
@@ -40,13 +40,13 @@ echo \
 
 $STD apt-get update
 $STD apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-systemctl enable docker
-systemctl start docker
+$STD systemctl enable docker
+$STD systemctl start docker
 msg_ok "Installed Docker"
 
 msg_info "Installing Docker Compose (standalone)"
-COMPOSE_VERSION=$(curl -fsSL https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
-curl -fsSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+COMPOSE_VERSION=$($STD curl -fsSL https://api.github.com/repos/docker/compose/releases/latest | grep '"tag_name":' | cut -d'"' -f4)
+$STD curl -fsSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 msg_ok "Installed Docker Compose"
@@ -96,7 +96,7 @@ EOF
 msg_ok "Created netboot.xyz configuration"
 
 msg_info "Starting netboot.xyz"
-docker-compose up -d
+$STD docker-compose up -d
 msg_ok "Started netboot.xyz"
 
 msg_info "Creating update script"
@@ -137,22 +137,22 @@ TimeoutStartSec=0
 WantedBy=multi-user.target
 EOF
 
-systemctl daemon-reload
-systemctl enable netboot.xyz.service
+$STD systemctl daemon-reload
+$STD systemctl enable netboot.xyz.service
 msg_ok "Created systemd service"
 
 msg_info "Waiting for netboot.xyz to start"
 sleep 30
 
 # Check if service is running
-if docker ps | grep -q netbootxyz; then
+if $STD docker ps | grep -q netbootxyz; then
     msg_ok "netboot.xyz is running"
 else
     msg_error "netboot.xyz failed to start"
 fi
 
 # Save version info
-RELEASE=$(docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
+RELEASE=$($STD docker images --format "table {{.Repository}}:{{.Tag}}" | grep netbootxyz/netbootxyz | head -1 | cut -d':' -f2)
 echo "${RELEASE}" > /opt/netboot.xyz_version.txt
 
 motd_ssh
